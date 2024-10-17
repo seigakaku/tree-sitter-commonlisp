@@ -245,8 +245,9 @@ module.exports = grammar(clojure, {
         while_clause: $ => prec.left(seq(choice(loopSymbol('while'), loopSymbol('until')), repeat($._gap), $._form)),
         repeat_clause: $ => prec.left(seq(loopSymbol('repeat'), repeat($._gap), $._form)),
         condition_clause: $ => prec.left(choice(seq(choice(loopSymbol('when'), loopSymbol('if'), loopSymbol('unless'), loopSymbol('always'), loopSymbol('thereis'), loopSymbol('never')), repeat($._gap), $._form), loopSymbol("else"))),
-        accumulation_clause: $ => seq($.accumulation_verb, repeat($._gap), $._form, optional(seq(repeat($._gap), loopSymbol('into'), repeat($._gap), $._form))),
+        accumulation_clause: $ => seq($.accumulation_verb, repeat($._gap), $._form, optional(field('type', seq(repeat($._gap), $._form, optional(seq(repeat($._gap), loopSymbol('into'), repeat($._gap), $._form)))))),
         termination_clause: $ => prec.left(seq(choice(loopSymbol('finally'), loopSymbol('return'), loopSymbol('initially')), repeat($._gap), $._form)),
+      //
 
 
         loop_clause: $ =>
